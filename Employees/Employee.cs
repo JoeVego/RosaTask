@@ -5,22 +5,18 @@ using FirstApp.Certificates;
 
 namespace FirstApp.Employees
 {
-    internal class Employee
+    /// <summary>
+    /// Родительский класс сотрудников. Определяет что каждый сотрудник имеет ФИО, должность,
+    /// может запросить справку и получить список отправленных запросов
+    /// </summary>
+    internal abstract class Employee
     {
-        //что сделать с этим айди ? хэш не хэш или из книги вариант
-        private int id;
         private string firstName;
         private EmployeePositions position;
 
-        private void RequestCertificate()
-        {
-            // сделать
-        }
+        public abstract void RequestCertificate();
 
-        private Certificate[] GetRequsets()
-        {
-            //сделать логику
-            return null;
-        } 
+        //посчитал, что все сотрудники, в том числе и бухгалтер могу запросить справку
+        public abstract Certificate[] GetRequests();
     }
 }

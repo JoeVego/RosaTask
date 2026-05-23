@@ -12,15 +12,15 @@ namespace FirstApp.Requests
         private Certificate certificate;
         private int amount;
         private string reason;
-        private RequestStatuses status;
+        private Statuses state;
 
-        public Request(Employee employee, Certificate certificate, int amount, string reason, RequestStatuses status)
+        public Request(Employee employee, Certificate certificate, int amount, string reason, Statuses state)
         {
             this.employee = employee;
             this.certificate = certificate;
             this.amount = amount;
             this.reason = reason;
-            this.status = status;
+            this.state = state;
         }
 
         // не приват ведь для буха метод
@@ -30,9 +30,14 @@ namespace FirstApp.Requests
         }
 
         // не приват ведь для буха метод
-        private void changeStatus()
+        private void changeState()
         {
             // меняем статус
+        }
+
+        public void SetState(Statuses newState)
+        {
+            this.state = newState;
         }
     }
 

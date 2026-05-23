@@ -1,9 +1,13 @@
 ﻿namespace FirstApp.Certificates
-
-public enum CertificateTypes
 {
-    NDFL2,
-    JobPlace,
-    AverageIncome,
-    FreeType
+    /// <summary>
+    /// Перечисление типов заявок.
+    /// </summary>
+    public enum CertificateTypes
+    {
+        NDFL2,
+        JobPlace,
+        AverageIncome,
+        FreeType
+    }
 }
