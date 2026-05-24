@@ -14,13 +14,13 @@ namespace FirstApp.Requests
         private string reason;
         private Statuses state;
 
-        public Request(Employee employee, Certificate certificate, int amount, string reason, Statuses state)
+        public Request(Employee employee, CertificateTypes certType, int amount, string reason)
         {
             this.employee = employee;
-            this.certificate = certificate;
+            this.certificate = new Certificate(certType, employee);
             this.amount = amount;
             this.reason = reason;
-            this.state = state;
+            this.state = Statuses.New;
         }
 
         // не приват ведь для буха метод
@@ -38,6 +38,12 @@ namespace FirstApp.Requests
         public void SetState(Statuses newState)
         {
             this.state = newState;
+        }
+
+        public override string ToString()
+        {
+            return $"Запрос справки сотрудником = {employee}, где тип справки = {certificate.GetCertificateType()}, " +
+                $"количество = {amount}, причина запроса = {reason}, статус заявки = {state}";
         }
     }
 

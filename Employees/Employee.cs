@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using FirstApp.Certificates;
+using FirstApp.Requests;
 
 namespace FirstApp.Employees
 {
@@ -11,12 +12,34 @@ namespace FirstApp.Employees
     /// </summary>
     internal abstract class Employee
     {
-        private string firstName;
-        private EmployeePositions position;
+        public string firstName;
+        public EmployeePositions position;
+        public List<Request> certRequests;
 
-        public abstract void RequestCertificate();
+        protected Employee(string firstName, EmployeePositions position)
+        {
+            this.firstName = firstName;
+            this.position = position;
+            this.certRequests = new List<Request>();
+        }
 
-        //посчитал, что все сотрудники, в том числе и бухгалтер могу запросить справку
-        public abstract Certificate[] GetRequests();
+        /// <summary>
+        /// метод запроса справки сотрудником.
+        /// посчитал, что все сотрудники, в том числе и бухгалтер могу запросить справку
+        /// </summary>
+        public void RequestCertificate(CertificateTypes typeOfCert, int amount, string reason)
+        {
+            certRequests.Add(new Request(this, typeOfCert, amount, reason));
+        }
+
+        public List<Request> GetEmployeeRequests()
+        {
+            return certRequests;
+        }
+
+        public override string ToString()
+        {
+            return $"{firstName} в должности {position}";
+        }
     }
 }

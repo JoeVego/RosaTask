@@ -6,8 +6,8 @@ using FirstApp.Employees;
 namespace FirstApp.Certificates
 {
     /// <summary>
-    /// Класс справки содержит информацию о заказчике справки,
-    /// ее типе
+    /// Класс справки содержит информацию о заказчике справки
+    /// и ее типе
     /// </summary>
     internal class Certificate
     {
@@ -23,6 +23,6 @@ namespace FirstApp.Certificates
         internal CertificateTypes GetCertificateType()
         {
             return certificateType;
-        }        
+        }
     }
 }

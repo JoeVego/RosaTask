@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FirstApp.Employees
 {
-    internal class Programmer : Employee
+    internal class Programmer(string firstName, EmployeePositions position) : Employee(firstName, position)
     {
     }
 }
