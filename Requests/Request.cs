@@ -12,7 +12,7 @@ namespace FirstApp.Requests
         private Certificate certificate;
         private int amount;
         private string reason;
-        private Statuses state;
+        private IRequestState state;
 
         public Request(Employee employee, CertificateTypes certType, int amount, string reason)
         {
@@ -20,25 +20,30 @@ namespace FirstApp.Requests
             this.certificate = new Certificate(certType, employee);
             this.amount = amount;
             this.reason = reason;
-            this.state = Statuses.New;
+            this.state = new InitRequest();
+            state.Create(this);
         }
 
-        // не приват ведь для буха метод
-        private void getCertInfo()
+        public void SetState(IRequestState stateToSet)
         {
-            // сделать
+            this.state = stateToSet;
         }
 
-        // не приват ведь для буха метод
-        private void changeState()
+        public void TakeToWork()
         {
-            // меняем статус
+            state.TakeToWork(this);
         }
 
-        public void SetState(Statuses newState)
+        public void Reject()
         {
-            this.state = newState;
+            state.Reject(this);
         }
+
+        public void Complete()
+        {
+            state.Complete(this);
+        }
+
 
         public override string ToString()
         {

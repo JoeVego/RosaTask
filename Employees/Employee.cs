@@ -37,6 +37,11 @@ namespace FirstApp.Employees
             return certRequests;
         }
 
+        public Request GetRequest(int positionInList)
+        {
+            return certRequests[positionInList];
+        }
+
         public override string ToString()
         {
             return $"{firstName} в должности {position}";

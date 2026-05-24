@@ -28,9 +28,19 @@ namespace FirstApp.Employees
             Console.WriteLine(employeeRequests[searchId]);
         }
 
-        private void changeReqStatus(Request request, Statuses upd_state)
+        private void TakeReqToWork(Request request)
         {
-            request.SetState(upd_state);
+            request.TakeToWork();
+        }
+
+        private void RejectReq(Request request)
+        {
+            request.Reject();
+        }
+
+        private void CompleteReq(Request request)
+        {
+            request.Complete();
         }
     }
 }
