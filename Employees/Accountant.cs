@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FirstApp.Requests;
+﻿using FirstApp.Requests;
 
 namespace FirstApp.Employees
 {
@@ -26,21 +23,6 @@ namespace FirstApp.Employees
             int searchId = Convert.ToInt32(Console.ReadLine());
 
             Console.WriteLine(employeeRequests[searchId]);
-        }
-
-        private void TakeReqToWork(Request request)
-        {
-            request.TakeToWork();
-        }
-
-        private void RejectReq(Request request)
-        {
-            request.Reject();
-        }
-
-        private void CompleteReq(Request request)
-        {
-            request.Complete();
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FirstApp.Employees
+﻿namespace FirstApp.Employees
 {
     //выбрал шаблон SimpleFactory, посчитал удобным, раз имеем родительский класс
     // и с учетом, что различных должностей сотрудников может быть много.

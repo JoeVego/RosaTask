@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FirstApp.Certificates;
+﻿using FirstApp.Certificates;
 using FirstApp.Requests;
 
 namespace FirstApp.Employees

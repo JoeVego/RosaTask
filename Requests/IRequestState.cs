@@ -71,7 +71,7 @@ namespace FirstApp.Requests
 
         public override string ToString()
         {
-            return "В работе";
+            return "Отклонена";
         }
     }
 
