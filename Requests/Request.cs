@@ -54,7 +54,7 @@ namespace FirstApp.Requests
 
         public string GetCertStatusName()
         {
-            return this.state.ToString();
+            return this.state?.ToString() ?? string.Empty;
         }
         public IRequestState GetCertStatus()
         {

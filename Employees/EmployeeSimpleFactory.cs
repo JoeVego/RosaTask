@@ -4,7 +4,7 @@
     // и с учетом, что различных должностей сотрудников может быть много.
     internal class EmployeeSimpleFactory
     {
-        public Employee createEmployee(String fName, EmployeePositions position) 
+        public Employee СreateEmployee(String fName, EmployeePositions position) 
         {
             switch (position)
             {
@@ -15,7 +15,7 @@
                     return new Programmer(fName, position);
 
                 default:
-                    throw new ArgumentException("Invalid employee type");
+                    throw new ArgumentException("Указан неверный тип клиента");
             }
         }
     }

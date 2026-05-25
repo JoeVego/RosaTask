@@ -4,6 +4,39 @@ using FirstApp.Requests;
 
 class Program
 {
+    static string InputString()
+    {
+        while (true)
+        {
+            Console.Write("Ввод = ");
+            string input = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(input))
+            {
+                return input;
+            }
+            else
+            {
+                Console.WriteLine("Некорректный ввод. Пожалуйста, попробуйте снова");
+            }
+        }
+    }
+
+    static int InputInt()
+    {
+        while (true)
+        {
+            Console.Write("Введите число = ");
+            string input = Console.ReadLine();
+            if (int.TryParse(input, out int result))
+            {
+                return result;
+            }
+            else
+            {
+                Console.WriteLine("Некорректный ввод. Пожалуйста, попробуйте снова");
+            }
+        }
+    }
     static void Main(string[] args)
     {
         List<Employee> employees = new List<Employee>();
@@ -14,16 +47,16 @@ class Program
         {
             Console.WriteLine("\nВыберите действие:\n0.Создать сотрудника" +
             "\n1.Войти в профиль сотрудника\n2.Завершить выполнение программы");
-            int mainMenu = Convert.ToInt32(Console.ReadLine());
+            int mainMenu = InputInt();
 
             if (mainMenu == 0)
             {
                 Console.WriteLine("\nВведите имя сотрудника:");
-                string fNameInput = Console.ReadLine();
+                string fNameInput = InputString();
 
                 Console.WriteLine("\nВыберите должность сотрудника:" +
                     "\n0. Бухгалтер\n1. Разработчик");
-                int createEmployeePos = Convert.ToInt32(Console.ReadLine());
+                int createEmployeePos = InputInt();
 
                 if (createEmployeePos == 0)
                 {
@@ -52,23 +85,24 @@ class Program
                 }
 
                 Console.WriteLine("\nВведите номер выбранного сотрудника:");
-                int emplIdx = Convert.ToInt32(Console.ReadLine());
+                int emplIdx = InputInt();
                 Employee currentEmpl = employees[emplIdx];
 
                 if (currentEmpl.position == EmployeePositions.Programmer)
                 {
                     Console.WriteLine($"\nCотруднику {currentEmpl.GetName()} " +
                         $"доступны операции:\n1.Заказать справку" +
-                        $"\n2.Получить информацию о заказанных справках" +
-                        $"\nВведите номер выбранной операции:");
+                        $"\n2.Получить информацию о заказанных справках");
+                    int progOperation = InputInt();
 
-                    int progOperation = Convert.ToInt32(Console.ReadLine());
                     if (progOperation == 1)
                     {
-                        Console.WriteLine($"\nВведите тип требуемой справки(2-НДФЛ,по месту работы, средний доход," +
-                            $"свободной формы) :");
-                        string reqCertType = Console.ReadLine();
-                        CertificateTypes newCertType;
+                        Console.WriteLine($"\nВведите тип требуемой справки" +
+                            $"(2-НДФЛ,по месту работы, средний доход," +
+                            $"свободной формы)");
+                        string reqCertType = InputString();
+
+                        CertificateTypes? newCertType = null;
                         switch (reqCertType)
                         {
                             case "2-НДФЛ": 
@@ -83,17 +117,22 @@ class Program
                             case "свободной формы":
                                 newCertType = CertificateTypes.FreeType;
                                 break;
-                            default: Console.WriteLine("\nУказан несуществующий тип справки");
-                                throw new Exception("Пока не обработал неверный тип справки :С");
+                            default: Console.WriteLine("\nУказан несуществующий тип справки." +
+                                "Попробуйте оформить справку заново");
+                                break;
                         }
 
                         Console.WriteLine($"\nВведите кол-во справок для заказа:");
-                        int reqCertAmount = Convert.ToInt32(Console.ReadLine());
+                        int reqCertAmount = InputInt();
 
                         Console.WriteLine($"\nВведите причину заказа справки");
-                        string reqCertReason = Console.ReadLine();
+                        string reqCertReason = InputString();
 
-                        currentEmpl.RequestCertificate(newCertType, reqCertAmount, reqCertReason);
+                        if (newCertType.HasValue)
+                        {
+                            currentEmpl.RequestCertificate(newCertType.Value, reqCertAmount, reqCertReason);
+                        }
+                        //currentEmpl.RequestCertificate(newCertType, reqCertAmount, reqCertReason);
                     }
                     if (progOperation == 2)
                     {
@@ -110,13 +149,13 @@ class Program
                         $"доступны операции:\n1.Посмотреть детали запроса" +
                         $"\n2.Изменить статус запроса" +
                         $"\n3.Заказать справку" +
-                        $"\n4.Получить информацию о заказаханных справках" +
-                        $"\nВведите номер выбранной операции:");
+                        $"\n4.Получить информацию о заказанных справках");
+                    int accOperation = InputInt();
 
-                    int accOperation = Convert.ToInt32(Console.ReadLine());
                     if (accOperation == 1)
                     {
                         Console.WriteLine("\nСписок сотрудников:");
+
                         int index = 0;
                         foreach (Employee empl in employees)
                         {
@@ -124,11 +163,10 @@ class Program
                             index++;
                         }
 
-                        Console.WriteLine("\nВведите номер нужного сотрудника = ");
-                        int accEmplIdx = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("\nВведите номер сотрудника, чьи справки требуется посмотреть = ");
+                        int accEmplIdx = InputInt();
+
                         Employee accEmpl = employees[accEmplIdx];
-
-
                         Console.WriteLine($"\nСотрудник {accEmpl.GetName()}" +
                             $"имеет {accEmpl.GetEmployeeRequests().Count} справок.");
 
@@ -138,16 +176,17 @@ class Program
                             Console.WriteLine($"{cntr}. " + req.GetCertTypeName());
                             cntr++;
                         }
-                        
+
                         Console.WriteLine("\nВведите номер справки = ");
-                        int reqId = Convert.ToInt32(Console.ReadLine());
+                        int reqId = InputInt();
 
                         Console.WriteLine($"\nИнформация по справке:" +
                             $"\n{accEmpl.GetEmployeeRequests()[reqId]}");
                     }
                     if (accOperation == 2)
                     {
-                        Console.WriteLine("\nСписок сотрудников:");
+                        Console.WriteLine("\nСписок сотрудников доступных для изменения статуса заявок:");
+
                         int index = 0;
                         foreach (Employee empl in employees)
                         {
@@ -156,10 +195,9 @@ class Program
                         }
 
                         Console.WriteLine("\nВведите номер нужного сотрудника = ");
-                        int accEmplIdx = Convert.ToInt32(Console.ReadLine());
+                        int accEmplIdx = InputInt();
+
                         Employee accEmpl = employees[accEmplIdx];
-
-
                         Console.WriteLine($"\nСотрудник {accEmpl.GetName()}" +
                             $"имеет {accEmpl.GetEmployeeRequests().Count} справок.");
 
@@ -170,60 +208,43 @@ class Program
                             cntr++;
                         }
 
-                        Console.WriteLine("\nВведите номер справки = ");
-                        int reqId = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("\nВведите номер справки, по которой требуется изменить статус = ");
+                        //int reqId = InputInt();
+                        //if (reqId >= accEmpl.GetEmployeeRequests().Count)
+                        //{
+                        //    Console.WriteLine("Введен неверный номер справки." +
+                        //        "\nВведите номер справки повторно.");
+                        //    reqId = InputInt();
 
+                        //}
+                        int requestsCount = accEmpl.GetEmployeeRequests().Count;
+                        int reqId;
+                        do
+                        {
+                            reqId = InputInt();
+                            if (reqId < 0 || reqId >= requestsCount)
+                            {
+                                Console.WriteLine("Введен неверный номер справки." +
+                                    "\nВведите номер справки повторно.");
+                            }
+                        } while (reqId < 0 || reqId >= requestsCount);
+
+                        // проверка выхода за пределы массива
                         IRequestState currentReqStatus = accEmpl.GetEmployeeRequests()[reqId].GetCertStatus();
-
                         Console.WriteLine($"\nСправка имеет статус = " +
                             $" {accEmpl.GetEmployeeRequests()[reqId].GetCertStatusName()}");
 
-                        if (currentReqStatus is NewRequest)
-                        {
-                            Console.WriteLine("\nЕсли вы хотите перевести заявку в статус В работе," +
-                                "введите Да");
-                            string answer = Console.ReadLine();
-                            if (answer.Equals("Да"))
-                            {
-                                currentReqStatus.TakeToWork(accEmpl.GetEmployeeRequests()[reqId]);
-                            }
-                            else
-                                Console.WriteLine("\nВведен неверный ответ. Статус заявки не изменился");
-                        }
-                        else if (currentReqStatus is RequestInProcess)
-                        {
-                            Console.WriteLine("\nВведите требуемый статус Завершено или Отклонена");
-                            string answer = Console.ReadLine();
-                            if (answer.Equals("Завершено"))
-                            {
-                                currentReqStatus.Complete(accEmpl.GetEmployeeRequests()[reqId]);
-                            }
-                            else if (answer.Equals("Отклонена"))
-                            {
-                                currentReqStatus.Reject(accEmpl.GetEmployeeRequests()[reqId]);
-                            }
-                            else
-                                Console.WriteLine("\nВведен неверный ответ. Статус заявки не изменился");
-                        }
-                        else if (currentReqStatus is RejectedRequest)
-                        {
-                            Console.WriteLine("\nЕсли вы хотите вернуть заявку в статус В работе," +
-                                "введите Да");
-                            string answer = Console.ReadLine();
-                            if (answer.Equals("Да"))
-                            {
-                                currentReqStatus.TakeToWork(accEmpl.GetEmployeeRequests()[reqId]);
-                            }
-                            else
-                                Console.WriteLine("\nВведен неверный ответ. Статус заявки не изменился");
-                        }
+                        //не нравится, но лучше не придумал
+                        Accountant currentEmpl2 = (Accountant)currentEmpl;
+                        currentEmpl2.ChangeReqState(currentReqStatus, accEmpl, reqId);
                     }
                     else if (accOperation == 3)
                     {
                         Console.WriteLine($"\nВведите тип требуемой справки(2-НДФЛ,по месту работы, средний доход," +
                             $"свободной формы) :");
-                        string reqCertType = Console.ReadLine();
-                        CertificateTypes newCertType;
+                        string reqCertType = InputString();
+
+                        CertificateTypes? newCertType = null;
                         switch (reqCertType)
                         {
                             case "2-НДФЛ":
@@ -239,17 +260,21 @@ class Program
                                 newCertType = CertificateTypes.FreeType;
                                 break;
                             default:
-                                Console.WriteLine("\nУказан несуществующий тип справки");
-                                throw new Exception("Пока не обработал неверный тип справки :С");
+                                Console.WriteLine("\nУказан несуществующий тип справки" +
+                                    "Попробуйте оформить справку заново");
+                                break;
                         }
 
                         Console.WriteLine($"\nВведите кол-во справок для заказа:");
-                        int reqCertAmount = Convert.ToInt32(Console.ReadLine());
+                        int reqCertAmount = InputInt();
 
                         Console.WriteLine($"\nВведите причину заказа справки");
-                        string reqCertReason = Console.ReadLine();
+                        string reqCertReason = InputString();
 
-                        currentEmpl.RequestCertificate(newCertType, reqCertAmount, reqCertReason);
+                        if (newCertType.HasValue)
+                        {
+                            currentEmpl.RequestCertificate(newCertType.Value, reqCertAmount, reqCertReason);
+                        }
                     }
                     if (accOperation == 4)
                     {

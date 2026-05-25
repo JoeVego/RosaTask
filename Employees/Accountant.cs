@@ -3,26 +3,72 @@
 namespace FirstApp.Employees
 {
     /// <summary>
-    /// Класс Бухгалтера
+    /// Класс Бухгалтера.
     /// </summary>
     internal class Accountant(string firstName, EmployeePositions position) : Employee(firstName, position)
     {
-
-        private void GetRequestInfo(Employee employee) 
+        static string InputString()
         {
-            int counter = 0;
-            List<Request> employeeRequests = employee.GetEmployeeRequests();
-
-            Console.WriteLine($"Справки запрошенные сотрудником {firstName}: ");
-            foreach (Request certReq in certRequests)
+            while (true)
             {
-                Console.WriteLine($"{counter}. " + certReq);
+                Console.Write("Ввод = ");
+                string input = Console.ReadLine();
+                if (!string.IsNullOrWhiteSpace(input))
+                {
+                    return input;
+                }
+                else
+                {
+                    Console.WriteLine("Некорректный ввод. Пожалуйста, попробуйте снова");
+                }
             }
+        }
 
-            Console.WriteLine("Введите номер справки для получения сведений = ");
-            int searchId = Convert.ToInt32(Console.ReadLine());
 
-            Console.WriteLine(employeeRequests[searchId]);
+        public void ChangeReqState(IRequestState currentReqStatus, Employee accEmpl,
+            int reqId)
+        {
+            if (currentReqStatus is NewRequest)
+            {
+                Console.WriteLine("\nЕсли вы хотите перевести заявку в статус В работе," +
+                    "введите Да");
+                string answer = InputString();
+
+                if (answer.Equals("Да"))
+                {
+                    currentReqStatus.TakeToWork(accEmpl.GetEmployeeRequests()[reqId]);
+                }
+                else
+                    Console.WriteLine("\nВведен неверный ответ. Статус заявки не изменился");
+            }
+            else if (currentReqStatus is RequestInProcess)
+            {
+                Console.WriteLine("\nВведите требуемый статус Завершено или Отклонена");
+                string answer = InputString();
+
+                if (answer.Equals("Завершено"))
+                {
+                    currentReqStatus.Complete(accEmpl.GetEmployeeRequests()[reqId]);
+                }
+                else if (answer.Equals("Отклонена"))
+                {
+                    currentReqStatus.Reject(accEmpl.GetEmployeeRequests()[reqId]);
+                }
+                else
+                    Console.WriteLine("\nВведен неверный ответ. Статус заявки не изменился");
+            }
+            else if (currentReqStatus is RejectedRequest)
+            {
+                Console.WriteLine("\nЕсли вы хотите вернуть заявку в статус В работе," +
+                    "введите Да");
+                string answer = InputString();
+                if (answer.Equals("Да"))
+                {
+                    currentReqStatus.TakeToWork(accEmpl.GetEmployeeRequests()[reqId]);
+                }
+                else
+                    Console.WriteLine("\nВведен неверный ответ. Статус заявки не изменился");
+            }
         }
     }
 }

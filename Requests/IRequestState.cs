@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FirstApp.Requests
+﻿namespace FirstApp.Requests
 {
     //выбрал шаблон состояния, т.к. состояний может быть множество с сложными связями/переходами
     //например статусы: назначения, согласования, выдачи, подписания
