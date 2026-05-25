@@ -8,15 +8,15 @@ namespace FirstApp.Employees
     // и с учетом, что различных должностей сотрудников может быть много.
     internal class EmployeeSimpleFactory
     {
-        public Employee createEmployee(EmployeePositions position) 
+        public Employee createEmployee(String fName, EmployeePositions position) 
         {
             switch (position)
             {
                 case EmployeePositions.Accountant:
-                    return new Accountant();
+                    return new Accountant(fName, position);
 
                 case EmployeePositions.Programmer: 
-                    return new Programmer();
+                    return new Programmer(fName, position);
 
                 default:
                     throw new ArgumentException("Invalid employee type");

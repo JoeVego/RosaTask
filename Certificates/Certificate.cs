@@ -24,5 +24,22 @@ namespace FirstApp.Certificates
         {
             return certificateType;
         }
+
+        public string GetCertTypeName()
+        {
+            switch (certificateType)
+            {
+                case CertificateTypes.NDFL2:
+                    return "2-НДФЛ";
+                case CertificateTypes.JobPlace:
+                    return "по месту работы";
+                case CertificateTypes.AverageIncome:
+                    return "средний доход";
+                case CertificateTypes.FreeType:
+                    return "свободной формы";
+                default:
+                    return "Некорректный тип справки";
+            }
+        }
     }
 }

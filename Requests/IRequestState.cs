@@ -34,6 +34,11 @@ namespace FirstApp.Requests
             request.SetState(new RequestInProcess());
             Console.WriteLine("Заявка в работе");
         }
+
+        public override string ToString()
+        {
+            return "Новый";
+        }
     }
 
     internal class RequestInProcess : IRequestState
@@ -46,8 +51,13 @@ namespace FirstApp.Requests
 
         public void Complete(Request request)
         {
-            request.SetState(new RequestCompeted());
+            request.SetState(new RequestCompleted());
             Console.WriteLine("Заявка готова");
+        }
+
+        public override string ToString()
+        {
+            return "В работе";
         }
     }
 
@@ -58,6 +68,11 @@ namespace FirstApp.Requests
             request.SetState(new RequestInProcess());
             Console.WriteLine("Заявка в работе");
         }
+
+        public override string ToString()
+        {
+            return "В работе";
+        }
     }
 
     internal class InitRequest : IRequestState
@@ -67,7 +82,17 @@ namespace FirstApp.Requests
             request.SetState(new NewRequest());
             Console.WriteLine("Заявка создана");
         }
+
+        public override string ToString()
+        {
+            return "Заявка создана";
+        }
     }
 
-    internal class RequestCompeted : IRequestState {}
+    internal class RequestCompleted : IRequestState {
+        public override string ToString()
+        {
+            return "Завершена";
+        }
+    }
 }

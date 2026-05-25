@@ -46,5 +46,10 @@ namespace FirstApp.Employees
         {
             return $"{firstName} в должности {position}";
         }
+
+        public string GetName()
+        {
+            return firstName;
+        }
     }
 }

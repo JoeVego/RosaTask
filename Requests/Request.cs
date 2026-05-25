@@ -44,11 +44,24 @@ namespace FirstApp.Requests
             state.Complete(this);
         }
 
-
         public override string ToString()
         {
             return $"Запрос справки сотрудником = {employee}, где тип справки = {certificate.GetCertificateType()}, " +
                 $"количество = {amount}, причина запроса = {reason}, статус заявки = {state}";
+        }
+
+        public string GetCertTypeName()
+        {
+            return certificate.GetCertTypeName();
+        }
+
+        public string GetCertStatusName()
+        {
+            return this.state.ToString();
+        }
+        public IRequestState GetCertStatus()
+        {
+            return this.state;
         }
     }
 
